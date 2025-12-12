@@ -1,0 +1,37 @@
+.vdot {
+  border: 1px solid lightgrey;
+  border-radius: var(--global-border-radius);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vdot__title {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+.vdot__subtext {
+  color: grey;
+}
+.vdot__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vdot__input_flexbox {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.vdot__input {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.vdot__calculate__button {
+  border-radius: var(--global-border-radius);
+  padding: 0.75rem;
+  color: white;
+  background-color: var(--steel-azure);
+  text-align: center;
+}
