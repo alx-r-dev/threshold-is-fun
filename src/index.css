@@ -4,12 +4,12 @@
   font-weight: 400;
   background-color: #ffffff;
   color: rgb(51, 51, 53);
-  --global-border-radius: 8px;
-  --lavender-grey: #909cc2ff;
-  --steel-azure: #084887ff;
-  --tiger-orange: #f58a07ff;
-  --sandy-brown: #f9ab55ff;
-  --ghost-white: #f7f5fbff;
+  --global-border-radius: 15px;
+  --lavender-grey: #00a7e1;
+  --steel-azure: #0474ba;
+  --tiger-orange: #f17720;
+  --sandy-brown: #ffa630;
+  --ghost-white: #f2f2f2;
 }
 
 button {
