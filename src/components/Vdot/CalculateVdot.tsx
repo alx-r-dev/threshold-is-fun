@@ -4,10 +4,18 @@ import { useState } from "react";
 import Vdot from "../../utils/vdot";
 import { checkRaceTimeFormat } from "../../utils/regex";
 
+const FormatError = () => {
+  return (
+    <span style={{ color: "red" }}>
+      Please format the race time as HH:MM:SS (00:00:00)
+    </span>
+  );
+};
+
 const CalculateVdot = () => {
   const [recentRaceTime, setRecentRaceTime] = useState<string>("");
   const [recentRaceDistance, setRecentRaceDistance] = useState<number>(1609.34);
-  const [raceTimeFormatCheck, setRaceTimeFormatCheck] =
+  const [raceTimeFormatCheckFailed, setRaceTimeFormatCheckFailed] =
     useState<boolean>(false);
   const handleRecentRaceTimeInput = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -19,17 +27,19 @@ const CalculateVdot = () => {
   ) => {
     setRecentRaceDistance(Number(e.target.value));
   };
-  console.log(raceTimeFormatCheck);
+
   const handleVdotFormSubmit = (e) => {
     e.preventDefault();
     if (checkRaceTimeFormat(recentRaceTime)) {
-      setRaceTimeFormatCheck(true);
+      const vdotScore = Vdot.convertToRacePace(
+        recentRaceDistance,
+        recentRaceTime
+      );
+      setRaceTimeFormatCheckFailed(false);
+      return vdotScore;
+    } else {
+      setRaceTimeFormatCheckFailed(true);
     }
-    const vdotScore = Vdot.convertToRacePace(
-      recentRaceDistance,
-      recentRaceTime
-    );
-    return vdotScore;
   };
 
   return (
@@ -52,6 +62,7 @@ const CalculateVdot = () => {
               placeholder="00:00:00"
               required
             />
+            {raceTimeFormatCheckFailed && <FormatError />}
           </label>
           <label className={styles.vdot__input__label}>
             Distance
@@ -76,7 +87,6 @@ const CalculateVdot = () => {
           Analyze Race
         </button>
       </form>
-      {raceTimeFormatCheck && <p>hello</p>}
     </section>
   );
 };
