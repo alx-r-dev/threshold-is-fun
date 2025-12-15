@@ -87,6 +87,7 @@ const CalculateVdot = () => {
           Analyze Race
         </button>
       </form>
+      {raceTimeFormatCheck && <p>hello</p>}
     </section>
   );
 };
