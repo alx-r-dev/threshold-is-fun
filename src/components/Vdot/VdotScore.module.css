@@ -1,0 +1,10 @@
+.vdot__score__circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 5px solid var(--steel-azure);
+  height: 100px;
+  width: 100px;
+}
