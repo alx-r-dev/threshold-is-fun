@@ -16,9 +16,6 @@ const Header = () => {
       </h6>
       <div className={styles.header__button__container}>
         <button className={styles.header__button__get__started}>
-          Get Started
-        </button>
-        <button className={styles.header__button__how__it__works}>
           How it Works{" "}
           <span style={{ marginLeft: "5px" }}>
             <MdArrowOutward />

@@ -6,6 +6,9 @@
 // half marathon = 21082.41 m
 // marathon = 42164.81 m
 class Vdot {
+  static #kilometer = 1000; //meters
+  static #mile = 1609.34; //meters
+  static #easyPace = 0.65; // 65% MAS
   static normalizeHhMmSs(time: string) {
     const hms = time.split(":");
     const hours = Number(hms[0]);
@@ -69,26 +72,62 @@ class Vdot {
   }
 
   static convertThresholdToPace(distance: number, time: string) {
-    const pacePerKilometer =
-      (1000 / this.calculateThreshold(distance, time)) * 60;
-    const pacePerMile =
-      (1609.344 / this.calculateThreshold(distance, time)) * 60;
-    return { pacePerKilometer: pacePerKilometer, pacePerMile: pacePerMile };
+    const pacePerKilometerThreshold =
+      (this.#kilometer / this.calculateThreshold(distance, time)) * 60;
+    const pacePerMileThreshold =
+      (this.#mile / this.calculateThreshold(distance, time)) * 60;
+    return {
+      pacePerKilometerThreshold: pacePerKilometerThreshold,
+      pacePerMileThreshold: pacePerMileThreshold
+    };
+  }
+
+  static convertToTrainingPaces(mas: number) {
+    const easy = this.#easyPace * mas;
+
+    const easyPacePerKilometer = (this.#kilometer / easy) * 60;
+    const easyPaceKilometerFormatted = this.formatPace(easyPacePerKilometer);
+    const easyPacePerMile = (this.#mile / easy) * 60;
+    const easyPaceMileFormatted = this.formatPace(easyPacePerMile);
+    return { easy: { easyPaceKilometerFormatted, easyPaceMileFormatted } };
+  }
+
+  static formatPace(seconds: number) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.round(seconds - minutes * 60);
+    if (secs === 60) {
+      return `${minutes + 1}:00`; // handles 59.5 or 60 seconds rounding
+    }
+    return `${minutes}:${String(secs).padStart(2, "0")}`;
   }
 
   static convertToRacePace(distance: number, time: string) {
     const thresholdPaces = this.convertThresholdToPace(distance, time);
-    const pacePerKilometer = thresholdPaces.pacePerKilometer;
-    const pacePerMile = thresholdPaces.pacePerMile;
-    const perKilometer = {
-      minutes: Math.floor(pacePerKilometer / 60),
-      seconds: Math.round(pacePerKilometer - 3 * 60)
+    const pacePerKilometerInSeconds = thresholdPaces.pacePerKilometerThreshold;
+    const pacePerMileInSeconds = thresholdPaces.pacePerMileThreshold;
+    console.log(this.convertToTrainingPaces(290.98));
+    return {
+      kilometer: this.formatPace(pacePerKilometerInSeconds),
+      mile: this.formatPace(pacePerMileInSeconds)
     };
-    const perMile = {
-      minutes: Math.floor(pacePerMile / 60),
-      seconds: Math.round(pacePerMile - 6 * 60)
-    };
-    return { kilometer: perKilometer, mile: perMile };
+  }
+
+  static calculateMas(distance: number, time: string) {
+    const vdots = this.calculateVdot(distance, time);
+    const a = 0.000104;
+    const b = 0.182258;
+    const c = -(4.6 + vdots);
+    const root = Math.pow(b, 2) - 4 * a * c;
+    const squareResult = Math.sqrt(root);
+    const numerator = -b + squareResult;
+    const denominator = 2 * a;
+    const result = numerator / denominator;
+    return result;
+  }
+
+  static calculatePaces(distance: number, time: string) {
+    const mas = this.calculateMas(distance, time);
+    return this.convertToTrainingPaces(mas);
   }
 }
 
