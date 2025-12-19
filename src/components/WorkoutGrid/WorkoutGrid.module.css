@@ -1,0 +1,32 @@
+.workout__chart__container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-radius: 15px;
+  border: 1px solid lightgray;
+  padding: 15px;
+  background-color: white;
+}
+.workout__chart__container__header {
+  padding-left: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workout__chart__header {
+  display: flex;
+  color: gray;
+  padding: 15px;
+}
+
+.workout__chart__rows {
+  display: flex;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.workout__chart__rows:nth-child(odd) {
+  background-color: #f2f2f2;
+}

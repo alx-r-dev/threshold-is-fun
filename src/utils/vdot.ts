@@ -9,6 +9,10 @@ class Vdot {
   static #kilometer = 1000; //meters
   static #mile = 1609.34; //meters
   static #easyPace = 0.65; // 65% MAS
+  static #shortIntervalPercentageOfMas = [0.914, 0.887];
+  static #mediumIntervalPercentageOfMas = [0.892, 0.866];
+  static #longIntervalPercentageOfMas = [0.871, 0.847];
+
   static normalizeHhMmSs(time: string) {
     const hms = time.split(":");
     const hours = Number(hms[0]);
@@ -82,9 +86,14 @@ class Vdot {
     };
   }
 
+  static convertToSeconds(pace: number) {
+    const secondsPerKilometer = (this.#kilometer / pace) * 60;
+    const secondsPerMile = (this.#mile / pace) * 60;
+    return { secondsPerKilometer, secondsPerMile };
+  }
+
   static convertToTrainingPaces(mas: number) {
     const easy = this.#easyPace * mas;
-
     const easyPacePerKilometer = (this.#kilometer / easy) * 60;
     const easyPaceKilometerFormatted = this.formatPace(easyPacePerKilometer);
     const easyPacePerMile = (this.#mile / easy) * 60;
@@ -102,13 +111,23 @@ class Vdot {
   }
 
   static convertToRacePace(distance: number, time: string) {
+    const mas = this.calculateMas(distance, time);
     const thresholdPaces = this.convertThresholdToPace(distance, time);
-    const pacePerKilometerInSeconds = thresholdPaces.pacePerKilometerThreshold;
-    const pacePerMileInSeconds = thresholdPaces.pacePerMileThreshold;
-    console.log(this.convertToTrainingPaces(290.98));
+    const thresholdPacePerKilometerInSeconds =
+      thresholdPaces.pacePerKilometerThreshold;
+    const thresholdPacePerMileInSeconds = thresholdPaces.pacePerMileThreshold;
+    const easyPaces = this.convertToTrainingPaces(mas);
+    const easyPacePerKilometer = easyPaces.easy.easyPaceKilometerFormatted;
+    const easyPacePerMile = easyPaces.easy.easyPaceMileFormatted;
     return {
-      kilometer: this.formatPace(pacePerKilometerInSeconds),
-      mile: this.formatPace(pacePerMileInSeconds)
+      kilometer: {
+        threshold: this.formatPace(thresholdPacePerKilometerInSeconds),
+        easy: easyPacePerKilometer
+      },
+      mile: {
+        threshold: this.formatPace(thresholdPacePerMileInSeconds),
+        easy: easyPacePerMile
+      }
     };
   }
 
@@ -128,6 +147,97 @@ class Vdot {
   static calculatePaces(distance: number, time: string) {
     const mas = this.calculateMas(distance, time);
     return this.convertToTrainingPaces(mas);
+  }
+
+  static calculateShortIntervalRanges(mas: number, paceUnit: string) {
+    const shortIntervals = {
+      metric: [
+        this.formatPace(
+          this.convertToSeconds(mas * this.#shortIntervalPercentageOfMas[0])
+            .secondsPerKilometer
+        ),
+
+        this.formatPace(
+          this.convertToSeconds(mas * this.#shortIntervalPercentageOfMas[1])
+            .secondsPerKilometer
+        )
+      ],
+      imperial: [
+        this.formatPace(
+          this.convertToSeconds(mas * this.#shortIntervalPercentageOfMas[0])
+            .secondsPerMile
+        ),
+        this.formatPace(
+          this.convertToSeconds(mas * this.#shortIntervalPercentageOfMas[1])
+            .secondsPerMile
+        )
+      ]
+    };
+    return paceUnit === "miles"
+      ? shortIntervals.imperial
+      : shortIntervals.metric;
+  }
+  static calculateMediumIntervalRanges(mas: number, paceUnit: string) {
+    const mediumInterval = {
+      metric: [
+        this.formatPace(
+          this.convertToSeconds(mas * this.#mediumIntervalPercentageOfMas[0])
+            .secondsPerKilometer
+        ),
+
+        this.formatPace(
+          this.convertToSeconds(mas * this.#mediumIntervalPercentageOfMas[1])
+            .secondsPerKilometer
+        )
+      ],
+      imperial: [
+        this.formatPace(
+          this.convertToSeconds(mas * this.#mediumIntervalPercentageOfMas[0])
+            .secondsPerMile
+        ),
+        this.formatPace(
+          this.convertToSeconds(mas * this.#mediumIntervalPercentageOfMas[1])
+            .secondsPerMile
+        )
+      ]
+    };
+    return paceUnit === "miles"
+      ? mediumInterval.imperial
+      : mediumInterval.metric;
+  }
+  static calculateLongIntervalRanges(mas: number, paceUnit: string) {
+    const longInterval = {
+      metric: [
+        this.formatPace(
+          this.convertToSeconds(mas * this.#longIntervalPercentageOfMas[0])
+            .secondsPerKilometer
+        ),
+
+        this.formatPace(
+          this.convertToSeconds(mas * this.#longIntervalPercentageOfMas[1])
+            .secondsPerKilometer
+        )
+      ],
+      imperial: [
+        this.formatPace(
+          this.convertToSeconds(mas * this.#longIntervalPercentageOfMas[0])
+            .secondsPerMile
+        ),
+        this.formatPace(
+          this.convertToSeconds(mas * this.#longIntervalPercentageOfMas[1])
+            .secondsPerMile
+        )
+      ]
+    };
+    return paceUnit === "miles" ? longInterval.imperial : longInterval.metric;
+  }
+
+  static calculateMasBands(distance: number, time: string, paceUnit: string) {
+    const mas = this.calculateMas(distance, time);
+    const shortRanges = this.calculateShortIntervalRanges(mas, paceUnit);
+    const mediumRanges = this.calculateMediumIntervalRanges(mas, paceUnit);
+    const longRanges = this.calculateLongIntervalRanges(mas, paceUnit);
+    return { shortRanges, mediumRanges, longRanges };
   }
 }
 

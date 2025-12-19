@@ -8,7 +8,7 @@ const VdotScore = ({ vdotScore }: VdotScoreProps) => {
   return (
     <div className={styles.vdot__score__circle}>
       <span style={{ fontWeight: 500 }}>VDOT</span>
-      <span style={{ fontWeight: 700, fontSize: "30px" }}>{vdotScore}</span>
+      <span style={{ fontWeight: 700, fontSize: "35px" }}>{vdotScore}</span>
     </div>
   );
 };
