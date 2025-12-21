@@ -1,17 +1,26 @@
 import styles from "./VdotPaces.module.css";
-import type { VdotTime } from "../../types/vdot";
 import VdotScore from "./VdotScore";
+import type { VdotFormData } from "./CalculateVdot";
+import Vdot from "../../utils/vdot";
 
 type VdotPacesProps = {
-  vdotScore: number;
-  vdotPaces: VdotTime;
+  vdotFormData: VdotFormData;
 };
 
 const UnderLine = () => {
   return <div style={{ borderBottom: "1px solid lightgray" }} />;
 };
 
-const VdotPaces = ({ vdotScore, vdotPaces }: VdotPacesProps) => {
+const VdotPaces = ({ vdotFormData }: VdotPacesProps) => {
+  const vdotPaces = Vdot.convertToRacePace(
+    vdotFormData.recentRaceDistance,
+    vdotFormData.recentRaceTime
+  );
+  const vdotScore = Vdot.calculateVdot(
+    vdotFormData.recentRaceDistance,
+    vdotFormData.recentRaceTime
+  );
+
   const kilometerThresholdPace = vdotPaces.kilometer.threshold;
   const kilometerEasyPace = vdotPaces.kilometer.easy;
   const formatKilometerThresholdPace = `${kilometerThresholdPace}/km`;
