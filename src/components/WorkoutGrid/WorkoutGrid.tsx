@@ -4,20 +4,17 @@ import WorkoutGridNotes from "./WorkoutGridNotes";
 import Vdot from "../../utils/vdot";
 import { formatPacesBasedOnPaceUnit } from "../../utils/paceUnit";
 import styles from "./WorkoutGrid.module.css";
+import type { VdotFormData } from "../Vdot/CalculateVdot";
 
 type WorkoutGridProps = {
-  recentRaceDistance: number;
-  recentRaceTime: string;
+  vdotFormData: VdotFormData;
 };
 
-const WorkoutGrid = ({
-  recentRaceDistance,
-  recentRaceTime
-}: WorkoutGridProps) => {
+const WorkoutGrid = ({ vdotFormData }: WorkoutGridProps) => {
   const [paceUnit, setPaceUnit] = useState<string>("miles");
   const workoutPaces = Vdot.calculateMasBands(
-    recentRaceDistance,
-    recentRaceTime,
+    vdotFormData.recentRaceDistance,
+    vdotFormData.recentRaceTime,
     paceUnit
   );
   const data = [

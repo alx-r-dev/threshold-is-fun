@@ -1,5 +1,10 @@
 import styles from "./SwitchToggle.module.css";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+  useState
+} from "react";
 
 type SwitchToggleProps = {
   paceUnit: string;
@@ -8,7 +13,7 @@ type SwitchToggleProps = {
 
 const SwitchToggle = ({ paceUnit, setPaceUnit }: SwitchToggleProps) => {
   const [isChecked, setIsChecked] = useState(false);
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
     const unit = event.target.checked ? "kilometers" : "miles";
     setPaceUnit(unit);

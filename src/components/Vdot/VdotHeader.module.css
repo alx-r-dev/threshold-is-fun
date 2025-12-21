@@ -7,3 +7,16 @@
   background-color: white;
   gap: 20px;
 }
+
+.vdot__title {
+  font-weight: 500;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  place-items: center;
+}
+
+.vdot__subtext {
+  color: grey;
+}
