@@ -1,21 +1,39 @@
-type formatPacesBasedOnPaceUnitProps = {
-  shortRanges: string[];
-  mediumRanges: string[];
-  longRanges: string[];
-};
+import type { VdotFormData } from "../types/vdot";
+import Vdot from "./vdot";
 
-function formatPacesBasedOnPaceUnit(
-  paces: formatPacesBasedOnPaceUnitProps,
-  paceUnit: string
-) {
+function formatPacesBasedOnPaceUnit(paces: string[], paceUnit: string) {
   const unit = paceUnit === "miles" ? "mi" : "km";
-  const shortRangeArray = paces.shortRanges;
-  const shortRangeString = `${shortRangeArray[0]} - ${shortRangeArray[1]}/${unit}`;
-  const mediumRangeArray = paces.mediumRanges;
-  const mediumRangeString = `${mediumRangeArray[0]} - ${mediumRangeArray[1]}/${unit}`;
-  const longRangeArray = paces.longRanges;
-  const longRangeString = `${longRangeArray[0]} - ${longRangeArray[1]}/${unit}`;
-  return { shortRangeString, mediumRangeString, longRangeString };
+  const paceRanges = `${paces[0]} - ${paces[1]}/${unit}`;
+  return paceRanges;
 }
 
-export { formatPacesBasedOnPaceUnit };
+function formattedVdotPaces(vdotFormData: VdotFormData) {
+  const vdotPaces = Vdot.convertToRacePace(
+    vdotFormData.recentRaceDistance,
+    vdotFormData.recentRaceTime
+  );
+  const vdotScore = Vdot.calculateVdot(
+    vdotFormData.recentRaceDistance,
+    vdotFormData.recentRaceTime
+  );
+
+  const kilometerThresholdPace = vdotPaces.kilometer.threshold;
+  const kilometerEasyPace = vdotPaces.kilometer.easy;
+  const formatKilometerThresholdPace = `${kilometerThresholdPace}/km`;
+  const formatKilometerEasyPace = `${kilometerEasyPace}/km`;
+  const mileThresholdPace = vdotPaces.mile.threshold;
+  const mileEasyPace = vdotPaces.mile.easy;
+  const formatMileThresholdPace = `${mileThresholdPace}/mi`;
+  const formatMileEasyPace = `${mileEasyPace}/mi`;
+  const formattedVdotScore = Math.round(vdotScore);
+
+  return {
+    formatKilometerEasyPace,
+    formatKilometerThresholdPace,
+    formatMileEasyPace,
+    formatMileThresholdPace,
+    formattedVdotScore
+  };
+}
+
+export { formatPacesBasedOnPaceUnit, formattedVdotPaces };

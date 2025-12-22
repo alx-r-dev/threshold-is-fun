@@ -1,7 +1,8 @@
 import styles from "./VdotInputs.module.css";
 import FormatError from "../FormatError/FormatError";
 import type { ChangeEvent } from "react";
-import type { VdotFormData } from "./CalculateVdot";
+
+import { type VdotFormData } from "../../types/vdot";
 
 type VdotInputsProps = {
   handleFormDataInput: (
@@ -16,7 +17,6 @@ const VdotInputs = ({
   vdotFormData,
   raceTimeFormatCheckSucceeded
 }: VdotInputsProps) => {
-  console.log(raceTimeFormatCheckSucceeded);
   return (
     <>
       <label className={styles.vdot__input__label}>

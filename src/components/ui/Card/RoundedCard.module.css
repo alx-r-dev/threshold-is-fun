@@ -1,4 +1,4 @@
-.vdot {
+.rounded__card {
   border: 1px solid lightgrey;
   border-radius: var(--global-border-radius);
   padding: 1rem;

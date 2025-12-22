@@ -1,7 +1,7 @@
 import styles from "./VdotScore.module.css";
 
 type VdotScoreProps = {
-  vdotScore: number;
+  vdotScore?: number;
 };
 
 const VdotScore = ({ vdotScore }: VdotScoreProps) => {
