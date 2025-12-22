@@ -1,51 +1,64 @@
 import { useState } from "react";
 import SwitchToggle from "../SwitchToggle/SwitchToggle";
 import WorkoutGridNotes from "./WorkoutGridNotes";
-import Vdot from "../../utils/vdot";
 import { formatPacesBasedOnPaceUnit } from "../../utils/paceUnit";
 import styles from "./WorkoutGrid.module.css";
-import type { VdotFormData } from "../Vdot/CalculateVdot";
+import type { VdotFormData } from "../../types/vdot";
+import RoundedCard from "../ui/Card/RoundedCard";
 
 type WorkoutGridProps = {
   vdotFormData: VdotFormData;
 };
 
+const Notes = () => {
+  return (
+    <>
+      <li>Recovery can be standing, walking, or very slow jogging</li>
+      <li>Keep recovery between 60-90s</li>
+      <li>Keep easy runs extremely easy</li>
+    </>
+  );
+};
+
 const WorkoutGrid = ({ vdotFormData }: WorkoutGridProps) => {
   const [paceUnit, setPaceUnit] = useState<string>("miles");
-  const workoutPaces = Vdot.calculateMasBands(
-    vdotFormData.recentRaceDistance,
-    vdotFormData.recentRaceTime,
-    paceUnit
-  );
   const data = [
     {
       Workout: "Short Interval",
       Structure: "8-12 x 1k",
-      "Target Pace": formatPacesBasedOnPaceUnit(workoutPaces, paceUnit)
-        .shortRangeString,
+      "Target Pace": formatPacesBasedOnPaceUnit(
+        vdotFormData.shortRanges,
+        paceUnit
+      ),
       Recovery: "60s"
     },
     {
       Workout: "Medium Interval",
       Structure: "4-6 x 2k",
-      "Target Pace": formatPacesBasedOnPaceUnit(workoutPaces, paceUnit)
-        .mediumRangeString,
+      "Target Pace": formatPacesBasedOnPaceUnit(
+        vdotFormData.mediumRanges,
+        paceUnit
+      ),
       Recovery: "60s"
     },
     {
       Workout: "Long Interval",
       Structure: "3 x 3k",
-      "Target Pace": formatPacesBasedOnPaceUnit(workoutPaces, paceUnit)
-        .longRangeString,
+      "Target Pace": formatPacesBasedOnPaceUnit(
+        vdotFormData.longRanges,
+        paceUnit
+      ),
       Recovery: "60-90s"
     }
   ];
 
   const workoutHeaders = Object.keys(data[0]);
   return (
-    <div className={styles.workout__chart__container}>
+    <RoundedCard>
       <div className={styles.workout__chart__container__header}>
-        <span style={{ fontWeight: "bold" }}>Norwegian Singles Workouts</span>
+        <span style={{ fontWeight: 500, fontSize: "1.25rem" }}>
+          Norwegian Singles Workouts
+        </span>
         <SwitchToggle paceUnit={paceUnit} setPaceUnit={setPaceUnit} />
       </div>
       <div className={styles.workout__chart__header}>
@@ -70,8 +83,10 @@ const WorkoutGrid = ({ vdotFormData }: WorkoutGridProps) => {
           </div>
         );
       })}
-      <WorkoutGridNotes />
-    </div>
+      <WorkoutGridNotes>
+        <Notes />
+      </WorkoutGridNotes>
+    </RoundedCard>
   );
 };
 

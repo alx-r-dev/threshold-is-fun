@@ -1,0 +1,26 @@
+.workout__week__chart__container__header {
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.workout__week__chart__header {
+  display: flex;
+  color: gray;
+  padding: 15px;
+}
+
+.workout__week__chart__rows {
+  display: flex;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.workout__week__chart__rows:nth-child(even) {
+  background-color: #fff1df;
+}
+
+.workout__week__formatter {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,26 +1,22 @@
-import styles from "./CalculateVdot.module.css";
 import { useState, type ChangeEvent } from "react";
-import { type VdotTime } from "../../types/vdot";
 import VdotPaces from "./VdotPaces";
 import WorkoutGrid from "../WorkoutGrid/WorkoutGrid";
 import VdotHeader from "./VdotHeader";
 import VdotForm from "./VdotForm";
-
-export type VdotFormData = {
-  recentRaceTime: string;
-  recentRaceDistance: number;
-};
-
-export type VdotData = {
-  vdotScore: number | null;
-  vdotPaces: VdotTime | null;
-};
+import useLocalStorage, {
+  initialLocalStorageValue,
+  localStorageKey
+} from "../../hooks/useLocalStorage";
+import LocalStorage from "../../utils/localStorage";
+import WorkoutWeek from "../WorkoutWeek/WorkoutWeek";
+import RoundedCard from "../ui/Card/RoundedCard";
 
 const CalculateVdot = () => {
-  const [vdotFormData, setVdotFormData] = useState<VdotFormData>({
-    recentRaceTime: "",
-    recentRaceDistance: 1609.34
-  });
+  const [vdotFormData, setVdotFormData] = useLocalStorage(
+    localStorageKey,
+    initialLocalStorageValue
+  );
+
   const [raceTimeFormatCheckSucceeded, setRaceTimeFormatCheckSucceeded] =
     useState<boolean | null>(null);
 
@@ -33,24 +29,33 @@ const CalculateVdot = () => {
     });
   };
 
+  const showAllComponents =
+    raceTimeFormatCheckSucceeded ||
+    LocalStorage.getLocalStorage(localStorageKey);
+
+  //TODO: refactor so section isnt needed and showallcomponents isnt needed so
+  //much
+  //1. Create a common ui component for the rounded white sections that the
+  //   other components go inside of
+  //2. Put vdotheader and form and paces inside a component so rounded card
+  //   doesnt show
+  //3. Refactor with plain objects instead of a class?
   return (
     <>
-      <section className={styles.vdot}>
+      <RoundedCard>
         <VdotHeader />
         <VdotForm
           handleFormDataInput={handleFormDataInput}
           vdotFormData={vdotFormData}
+          setVdotFormData={setVdotFormData}
           setRaceTimeFormatCheckSucceeded={setRaceTimeFormatCheckSucceeded}
           raceTimeFormatCheckSucceeded={raceTimeFormatCheckSucceeded}
         />
-        {raceTimeFormatCheckSucceeded && (
-          <VdotPaces vdotFormData={vdotFormData} />
-        )}
-      </section>
+        {showAllComponents && <VdotPaces vdotFormData={vdotFormData} />}
+      </RoundedCard>
 
-      {raceTimeFormatCheckSucceeded && (
-        <WorkoutGrid vdotFormData={vdotFormData} />
-      )}
+      {showAllComponents && <WorkoutGrid vdotFormData={vdotFormData} />}
+      {showAllComponents && <WorkoutWeek />}
     </>
   );
 };

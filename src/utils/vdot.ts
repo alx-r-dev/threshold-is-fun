@@ -6,9 +6,9 @@
 // half marathon = 21082.41 m
 // marathon = 42164.81 m
 class Vdot {
-  static #kilometer = 1000; //meters
-  static #mile = 1609.34; //meters
-  static #easyPace = 0.65; // 65% MAS
+  static kilometer = 1000; //meters
+  static mile = 1609.34; //meters
+  static easyPace = 0.65; // 65% MAS
   static #shortIntervalPercentageOfMas = [0.914, 0.887];
   static #mediumIntervalPercentageOfMas = [0.892, 0.866];
   static #longIntervalPercentageOfMas = [0.871, 0.847];
@@ -77,9 +77,9 @@ class Vdot {
 
   static convertThresholdToPace(distance: number, time: string) {
     const pacePerKilometerThreshold =
-      (this.#kilometer / this.calculateThreshold(distance, time)) * 60;
+      (this.kilometer / this.calculateThreshold(distance, time)) * 60;
     const pacePerMileThreshold =
-      (this.#mile / this.calculateThreshold(distance, time)) * 60;
+      (this.mile / this.calculateThreshold(distance, time)) * 60;
     return {
       pacePerKilometerThreshold: pacePerKilometerThreshold,
       pacePerMileThreshold: pacePerMileThreshold
@@ -87,16 +87,16 @@ class Vdot {
   }
 
   static convertToSeconds(pace: number) {
-    const secondsPerKilometer = (this.#kilometer / pace) * 60;
-    const secondsPerMile = (this.#mile / pace) * 60;
+    const secondsPerKilometer = (this.kilometer / pace) * 60;
+    const secondsPerMile = (this.mile / pace) * 60;
     return { secondsPerKilometer, secondsPerMile };
   }
 
   static convertToTrainingPaces(mas: number) {
-    const easy = this.#easyPace * mas;
-    const easyPacePerKilometer = (this.#kilometer / easy) * 60;
+    const easy = this.easyPace * mas;
+    const easyPacePerKilometer = (this.kilometer / easy) * 60;
     const easyPaceKilometerFormatted = this.formatPace(easyPacePerKilometer);
-    const easyPacePerMile = (this.#mile / easy) * 60;
+    const easyPacePerMile = (this.mile / easy) * 60;
     const easyPaceMileFormatted = this.formatPace(easyPacePerMile);
     return { easy: { easyPaceKilometerFormatted, easyPaceMileFormatted } };
   }

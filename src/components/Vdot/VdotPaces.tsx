@@ -1,7 +1,6 @@
 import styles from "./VdotPaces.module.css";
 import VdotScore from "./VdotScore";
-import type { VdotFormData } from "./CalculateVdot";
-import Vdot from "../../utils/vdot";
+import type { VdotFormData } from "../../types/vdot";
 
 type VdotPacesProps = {
   vdotFormData: VdotFormData;
@@ -12,29 +11,11 @@ const UnderLine = () => {
 };
 
 const VdotPaces = ({ vdotFormData }: VdotPacesProps) => {
-  const vdotPaces = Vdot.convertToRacePace(
-    vdotFormData.recentRaceDistance,
-    vdotFormData.recentRaceTime
-  );
-  const vdotScore = Vdot.calculateVdot(
-    vdotFormData.recentRaceDistance,
-    vdotFormData.recentRaceTime
-  );
-
-  const kilometerThresholdPace = vdotPaces.kilometer.threshold;
-  const kilometerEasyPace = vdotPaces.kilometer.easy;
-  const formatKilometerThresholdPace = `${kilometerThresholdPace}/km`;
-  const formatKilometerEasyPace = `${kilometerEasyPace}/km`;
-  const mileThresholdPace = vdotPaces.mile.threshold;
-  const mileEasyPace = vdotPaces.mile.easy;
-  const formatMileThresholdPace = `${mileThresholdPace}/mi`;
-  const formatMileEasyPace = `${mileEasyPace}/mi`;
-  const formattedVdotScore = Math.round(vdotScore);
   return (
     <>
       <UnderLine />
       <div className={styles.vdot__paces__container}>
-        <VdotScore vdotScore={formattedVdotScore} />
+        <VdotScore vdotScore={vdotFormData.formattedVdotScore} />
 
         <div className={styles.vdot__paces__table}>
           <div className={styles.vdot__paces__headers}>
@@ -44,13 +25,13 @@ const VdotPaces = ({ vdotFormData }: VdotPacesProps) => {
           </div>
           <div className={styles.vdot__paces__row}>
             <span>Easy</span>
-            <span>{formatMileEasyPace}</span>
-            <span>{formatKilometerEasyPace}</span>
+            <span>{vdotFormData.formatMileEasyPace}</span>
+            <span>{vdotFormData.formatKilometerEasyPace}</span>
           </div>
           <div className={styles.vdot__paces__row}>
             <span>Threshold</span>
-            <span>{formatMileThresholdPace}</span>
-            <span>{formatKilometerThresholdPace}</span>
+            <span>{vdotFormData.formatMileThresholdPace}</span>
+            <span>{vdotFormData.formatKilometerThresholdPace}</span>
           </div>
         </div>
       </div>

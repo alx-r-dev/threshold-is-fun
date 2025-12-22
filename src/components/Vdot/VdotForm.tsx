@@ -2,7 +2,10 @@ import type { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 import styles from "./VdotForm.module.css";
 import VdotInputs from "./VdotInputs";
 import { checkRaceTimeFormat } from "../../utils/regex";
-import type { VdotFormData } from "./CalculateVdot";
+import { type VdotFormData } from "../../types/vdot";
+import { formattedVdotPaces } from "../../utils/paceUnit";
+import { type LocalStorageValue } from "../../hooks/useLocalStorage";
+import Vdot from "../../utils/vdot";
 
 type VdotFormProps = {
   handleFormDataInput: (
@@ -11,18 +14,31 @@ type VdotFormProps = {
   vdotFormData: VdotFormData;
   setRaceTimeFormatCheckSucceeded: Dispatch<SetStateAction<boolean | null>>;
   raceTimeFormatCheckSucceeded: boolean | null;
+  setVdotFormData: (
+    value: LocalStorageValue | ((val: LocalStorageValue) => LocalStorageValue)
+  ) => void;
 };
 
 const VdotForm = ({
   handleFormDataInput,
   vdotFormData,
   setRaceTimeFormatCheckSucceeded,
-  raceTimeFormatCheckSucceeded
+  raceTimeFormatCheckSucceeded,
+  setVdotFormData
 }: VdotFormProps) => {
   const handleVdotFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (checkRaceTimeFormat(vdotFormData.recentRaceTime)) {
       setRaceTimeFormatCheckSucceeded(true);
+      const vdotPaces = formattedVdotPaces(vdotFormData);
+      const workoutPaces = Vdot.calculateMasBands(
+        vdotFormData.recentRaceDistance,
+        vdotFormData.recentRaceTime,
+        "miles"
+      );
+
+      const vdotData = { ...vdotFormData, ...vdotPaces, ...workoutPaces };
+      setVdotFormData(vdotData);
     } else {
       setRaceTimeFormatCheckSucceeded(false);
     }

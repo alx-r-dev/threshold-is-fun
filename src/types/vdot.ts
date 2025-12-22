@@ -32,3 +32,21 @@ type LongRange = {
 };
 
 export type WorkoutPaces = ShortRange & MediumRange & LongRange;
+
+export type VdotFormData = {
+  recentRaceTime: string;
+  recentRaceDistance: number;
+  formatKilometerEasyPace?: string;
+  formatKilometerThresholdPace?: string;
+  formatMileEasyPace?: string;
+  formatMileThresholdPace?: string;
+  formattedVdotScore?: number;
+  shortRanges: string[];
+  mediumRanges: string[];
+  longRanges: string[];
+};
+
+export type VdotData = {
+  vdotScore: number | null;
+  vdotPaces: VdotTime | null;
+};
