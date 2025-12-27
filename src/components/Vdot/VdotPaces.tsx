@@ -4,13 +4,19 @@ import type { VdotFormData } from "../../types/vdot";
 
 type VdotPacesProps = {
   vdotFormData: VdotFormData;
+  isDataAvailable: boolean;
 };
 
 const UnderLine = () => {
-  return <div style={{ borderBottom: "1px solid lightgray" }} />;
+  return (
+    <div style={{ borderBottom: "1px solid lightgray", marginTop: "20px" }} />
+  );
 };
 
-const VdotPaces = ({ vdotFormData }: VdotPacesProps) => {
+const VdotPaces = ({ vdotFormData, isDataAvailable }: VdotPacesProps) => {
+  if (isDataAvailable === false) {
+    return;
+  }
   return (
     <>
       <UnderLine />

@@ -31,6 +31,11 @@ type LongRange = {
   longRanges: WorkoutRanges;
 };
 
+export type InputForm = {
+  recentRaceTime: string;
+  recentRaceDistance: number;
+};
+
 export type WorkoutPaces = ShortRange & MediumRange & LongRange;
 
 export type VdotFormData = {
@@ -41,12 +46,23 @@ export type VdotFormData = {
   formatMileEasyPace?: string;
   formatMileThresholdPace?: string;
   formattedVdotScore?: number;
-  shortRanges: string[];
-  mediumRanges: string[];
-  longRanges: string[];
 };
 
 export type VdotData = {
   vdotScore: number | null;
   vdotPaces: VdotTime | null;
+};
+
+export type VdotForm = {
+  recentRaceTime: string;
+  recentRaceDistance: number;
+  formatKilometerEasyPace?: string;
+  formatKilometerThresholdPace?: string;
+  formatMileEasyPace?: string;
+  formatMileThresholdPace?: string;
+  formattedVdotScore?: number;
+};
+
+export type NorwegianGridData = {
+  paceUnit: string;
 };

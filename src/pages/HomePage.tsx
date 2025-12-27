@@ -1,12 +1,12 @@
 import MainLayout from "../layout/MainLayout";
-import CalculateVdot from "../components/Vdot/CalculateVdot";
 import Header from "../components/Header/Header";
+import NorwegianMainContainer from "../components/Vdot/NorweiganMainContainer";
 
 const HomePage = () => {
   return (
     <MainLayout>
       <Header />
-      <CalculateVdot />
+      <NorwegianMainContainer />
     </MainLayout>
   );
 };

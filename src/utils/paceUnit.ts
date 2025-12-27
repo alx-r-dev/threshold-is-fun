@@ -1,4 +1,3 @@
-import type { VdotFormData } from "../types/vdot";
 import Vdot from "./vdot";
 
 function formatPacesBasedOnPaceUnit(paces: string[], paceUnit: string) {
@@ -7,15 +6,12 @@ function formatPacesBasedOnPaceUnit(paces: string[], paceUnit: string) {
   return paceRanges;
 }
 
-function formattedVdotPaces(vdotFormData: VdotFormData) {
-  const vdotPaces = Vdot.convertToRacePace(
-    vdotFormData.recentRaceDistance,
-    vdotFormData.recentRaceTime
-  );
-  const vdotScore = Vdot.calculateVdot(
-    vdotFormData.recentRaceDistance,
-    vdotFormData.recentRaceTime
-  );
+function formattedVdotPaces(
+  recentRaceDistance: number,
+  recentRaceTime: string
+) {
+  const vdotPaces = Vdot.convertToRacePace(recentRaceDistance, recentRaceTime);
+  const vdotScore = Vdot.calculateVdot(recentRaceDistance, recentRaceTime);
 
   const kilometerThresholdPace = vdotPaces.kilometer.threshold;
   const kilometerEasyPace = vdotPaces.kilometer.easy;

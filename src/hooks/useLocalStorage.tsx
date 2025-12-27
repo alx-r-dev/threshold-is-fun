@@ -1,33 +1,23 @@
 import { useState } from "react";
 import LocalStorage from "../utils/localStorage";
 import Vdot from "../utils/vdot";
+import type { NorwegianGridData, VdotFormData } from "../types/vdot";
 
-export const localStorageKey = "vdot";
+export const vdotLocalStorageKey = "vdot";
+export const norwegianLocalStorageKey = "norwegian";
 
-export const initialLocalStorageValue: LocalStorageValue = {
+export const initialVdotLocalStorageValue: VdotFormData = {
   recentRaceTime: "",
   recentRaceDistance: Vdot.mile,
   formatKilometerEasyPace: "",
   formatKilometerThresholdPace: "",
   formatMileEasyPace: "",
   formatMileThresholdPace: "",
-  formattedVdotScore: 0,
-  shortRanges: [],
-  mediumRanges: [],
-  longRanges: []
+  formattedVdotScore: 0
 };
 
-export type LocalStorageValue = {
-  recentRaceTime: string;
-  recentRaceDistance: number;
-  formatKilometerEasyPace: string;
-  formatKilometerThresholdPace: string;
-  formatMileEasyPace: string;
-  formatMileThresholdPace: string;
-  formattedVdotScore: number;
-  shortRanges: string[];
-  mediumRanges: string[];
-  longRanges: string[];
+export const initialNorwegianLocalStorageValue: NorwegianGridData = {
+  paceUnit: "miles"
 };
 
 const useLocalStorage = <T,>(
@@ -49,7 +39,7 @@ const useLocalStorage = <T,>(
         value instanceof Function ? value(vdotFormData) : value;
       setStoredValue(valueToStore);
       if (typeof window !== "undefined") {
-        LocalStorage.setLocalStorage(key, value);
+        LocalStorage.setLocalStorage(key, valueToStore);
       }
     } catch (error) {
       console.log(error);

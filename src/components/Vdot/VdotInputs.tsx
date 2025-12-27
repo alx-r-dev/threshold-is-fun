@@ -1,19 +1,19 @@
 import styles from "./VdotInputs.module.css";
 import FormatError from "../FormatError/FormatError";
-import type { ChangeEvent } from "react";
+import type { Ref } from "react";
 
 import { type VdotFormData } from "../../types/vdot";
 
 type VdotInputsProps = {
-  handleFormDataInput: (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  raceTimeRef: Ref<HTMLInputElement>;
+  raceDistanceRef: Ref<HTMLSelectElement>;
   vdotFormData: VdotFormData;
   raceTimeFormatCheckSucceeded: boolean | null;
 };
 
 const VdotInputs = ({
-  handleFormDataInput,
+  raceTimeRef,
+  raceDistanceRef,
   vdotFormData,
   raceTimeFormatCheckSucceeded
 }: VdotInputsProps) => {
@@ -22,10 +22,10 @@ const VdotInputs = ({
       <label className={styles.vdot__input__label}>
         Recent Race Time
         <input
+          ref={raceTimeRef}
           className={styles.vdot__input__race}
           name="recentRaceTime"
-          onChange={handleFormDataInput}
-          value={vdotFormData.recentRaceTime}
+          defaultValue={vdotFormData.recentRaceTime}
           placeholder="00:00:00(HH:MM:SS)"
           required
         />
@@ -34,10 +34,10 @@ const VdotInputs = ({
       <label className={styles.vdot__input__label}>
         Distance
         <select
-          value={vdotFormData.recentRaceDistance}
+          ref={raceDistanceRef}
+          defaultValue={vdotFormData.recentRaceDistance}
           className={styles.vdot__input__distance}
           name="recentRaceDistance"
-          onChange={handleFormDataInput}
           required
         >
           <option value={1609.34}>Mile</option>

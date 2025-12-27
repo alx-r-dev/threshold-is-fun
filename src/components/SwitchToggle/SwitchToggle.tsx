@@ -1,22 +1,23 @@
+import type { NorwegianGridData } from "../../types/vdot";
 import styles from "./SwitchToggle.module.css";
-import {
-  type ChangeEvent,
-  type Dispatch,
-  type SetStateAction,
-  useState
-} from "react";
+import { type ChangeEvent, useState } from "react";
 
 type SwitchToggleProps = {
   paceUnit: string;
-  setPaceUnit: Dispatch<SetStateAction<string>>;
+  setNorwegianGridData: (
+    value: NorwegianGridData | ((val: NorwegianGridData) => NorwegianGridData)
+  ) => void;
 };
 
-const SwitchToggle = ({ paceUnit, setPaceUnit }: SwitchToggleProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+const SwitchToggle = ({
+  paceUnit,
+  setNorwegianGridData
+}: SwitchToggleProps) => {
+  const [isChecked, setIsChecked] = useState(paceUnit === "kilometers");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
     const unit = event.target.checked ? "kilometers" : "miles";
-    setPaceUnit(unit);
+    setNorwegianGridData({ paceUnit: unit });
   };
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
