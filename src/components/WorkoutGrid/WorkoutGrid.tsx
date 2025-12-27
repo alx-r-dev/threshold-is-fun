@@ -1,13 +1,18 @@
-import { useState } from "react";
 import SwitchToggle from "../SwitchToggle/SwitchToggle";
 import WorkoutGridNotes from "./WorkoutGridNotes";
 import { formatPacesBasedOnPaceUnit } from "../../utils/paceUnit";
 import styles from "./WorkoutGrid.module.css";
-import type { VdotFormData } from "../../types/vdot";
+import type { VdotFormData, NorwegianGridData } from "../../types/vdot";
 import RoundedCard from "../ui/Card/RoundedCard";
+import Vdot from "../../utils/vdot";
 
 type WorkoutGridProps = {
   vdotFormData: VdotFormData;
+  isDataAvailable: boolean;
+  norwegianGridData: NorwegianGridData;
+  setNorwegianGridData: (
+    value: NorwegianGridData | ((val: NorwegianGridData) => NorwegianGridData)
+  ) => void;
 };
 
 const Notes = () => {
@@ -20,38 +25,54 @@ const Notes = () => {
   );
 };
 
-const WorkoutGrid = ({ vdotFormData }: WorkoutGridProps) => {
-  const [paceUnit, setPaceUnit] = useState<string>("miles");
+const WorkoutGrid = ({
+  vdotFormData,
+  isDataAvailable,
+  norwegianGridData,
+  setNorwegianGridData
+}: WorkoutGridProps) => {
+  const workoutPaces = Vdot.calculateMasBands(
+    vdotFormData.recentRaceDistance,
+    vdotFormData.recentRaceTime,
+    norwegianGridData.paceUnit
+  );
+  const shortIntervalRange = formatPacesBasedOnPaceUnit(
+    workoutPaces.shortRanges,
+    norwegianGridData.paceUnit
+  );
+  const mediumIntervalRange = formatPacesBasedOnPaceUnit(
+    workoutPaces.mediumRanges,
+    norwegianGridData.paceUnit
+  );
+  const longIntervalRange = formatPacesBasedOnPaceUnit(
+    workoutPaces.longRanges,
+    norwegianGridData.paceUnit
+  );
+
   const data = [
     {
       Workout: "Short Interval",
       Structure: "8-12 x 1k",
-      "Target Pace": formatPacesBasedOnPaceUnit(
-        vdotFormData.shortRanges,
-        paceUnit
-      ),
+      "Target Pace": shortIntervalRange,
       Recovery: "60s"
     },
     {
       Workout: "Medium Interval",
       Structure: "4-6 x 2k",
-      "Target Pace": formatPacesBasedOnPaceUnit(
-        vdotFormData.mediumRanges,
-        paceUnit
-      ),
+      "Target Pace": mediumIntervalRange,
       Recovery: "60s"
     },
     {
       Workout: "Long Interval",
       Structure: "3 x 3k",
-      "Target Pace": formatPacesBasedOnPaceUnit(
-        vdotFormData.longRanges,
-        paceUnit
-      ),
+      "Target Pace": longIntervalRange,
       Recovery: "60-90s"
     }
   ];
 
+  if (isDataAvailable === false) {
+    return;
+  }
   const workoutHeaders = Object.keys(data[0]);
   return (
     <RoundedCard>
@@ -59,7 +80,10 @@ const WorkoutGrid = ({ vdotFormData }: WorkoutGridProps) => {
         <span style={{ fontWeight: 500, fontSize: "1.25rem" }}>
           Norwegian Singles Workouts
         </span>
-        <SwitchToggle paceUnit={paceUnit} setPaceUnit={setPaceUnit} />
+        <SwitchToggle
+          paceUnit={norwegianGridData.paceUnit}
+          setNorwegianGridData={setNorwegianGridData}
+        />
       </div>
       <div className={styles.workout__chart__header}>
         {workoutHeaders.map((item, index) => {

@@ -64,7 +64,11 @@ const workoutWeekRows = [
   { Day: "Sunday", Run: "Long run", "Total miles": 13 }
 ];
 
-const WorkoutWeek = () => {
+const WorkoutWeek = ({ isDataAvailable }: { isDataAvailable: boolean }) => {
+  if (isDataAvailable === false) {
+    return;
+  }
+
   const workoutWeekHeaders = Object.keys(workoutWeekRows[0]);
   return (
     <RoundedCard>

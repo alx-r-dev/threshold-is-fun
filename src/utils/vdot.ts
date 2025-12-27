@@ -5,6 +5,7 @@
 // 15k = 15000m
 // half marathon = 21082.41 m
 // marathon = 42164.81 m
+
 class Vdot {
   static kilometer = 1000; //meters
   static mile = 1609.34; //meters
