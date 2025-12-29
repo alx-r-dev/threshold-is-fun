@@ -1,0 +1,20 @@
+.button__redirect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  height: 45px;
+  padding: 0px 15px 0px 15px;
+  border: none;
+  border-radius: var(--global-border-radius);
+  color: white;
+  background-color: var(--steel-azure);
+  font-weight: 500;
+}
+
+.button__redirect__content {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}

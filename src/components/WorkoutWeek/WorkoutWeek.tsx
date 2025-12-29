@@ -43,25 +43,40 @@ const WorkoutDayFormat = ({
 };
 
 const workoutWeekRows = [
-  { Day: "Monday", Run: "rest", "Total miles": 0 },
+  { Day: "Monday", Run: "rest" },
   {
     Day: "Tuesday",
-    Run: <WorkoutDayFormat warmUp="1 mile" subT="3 x 3k" cooldown="1 mile" />,
-    "Total miles": 7.5
+    Run: (
+      <WorkoutDayFormat
+        warmUp="1 mile"
+        subT="3 x 3k, 60-90s recovery"
+        cooldown="1 mile"
+      />
+    )
   },
-  { Day: "Wednesday", Run: "Easy run", "Total miles": 9 },
+  { Day: "Wednesday", Run: "Easy run" },
   {
     Day: "Thursday",
-    Run: <WorkoutDayFormat warmUp="1 mile" subT="4 x 2k" cooldown="1 mile" />,
-    "Total miles": 7
+    Run: (
+      <WorkoutDayFormat
+        warmUp="1 mile"
+        subT="4 x 2k, 60s recovery"
+        cooldown="1 mile"
+      />
+    )
   },
-  { Day: "Friday", Run: "Easy Run", "Total miles": 9 },
+  { Day: "Friday", Run: "Easy Run" },
   {
     Day: "Saturday",
-    Run: <WorkoutDayFormat warmUp="1 mile" subT="10 x 1k" cooldown="1 mile" />,
-    "Total miles": 8
+    Run: (
+      <WorkoutDayFormat
+        warmUp="1 mile"
+        subT="8-12 x 1k, 60s recovery"
+        cooldown="1 mile"
+      />
+    )
   },
-  { Day: "Sunday", Run: "Long run", "Total miles": 13 }
+  { Day: "Sunday", Run: "Long run" }
 ];
 
 const WorkoutWeek = ({ isDataAvailable }: { isDataAvailable: boolean }) => {
@@ -74,7 +89,7 @@ const WorkoutWeek = ({ isDataAvailable }: { isDataAvailable: boolean }) => {
     <RoundedCard>
       <div className={styles.workout__week__chart__container__header}>
         <span style={{ fontWeight: 500, fontSize: "1.25rem" }}>
-          Example week of training
+          Sample weekly training structure
         </span>
       </div>
       <div className={styles.workout__week__chart__header}>
