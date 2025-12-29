@@ -2,7 +2,7 @@ import { FaRunning } from "react-icons/fa";
 import styles from "./Header.module.css";
 import { MdArrowOutward } from "react-icons/md";
 
-const Header = () => {
+const CalculatorHeader = () => {
   return (
     <header className={styles.header}>
       {<FaRunning size="50px" />}
@@ -26,4 +26,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default CalculatorHeader;

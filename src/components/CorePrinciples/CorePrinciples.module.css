@@ -1,0 +1,33 @@
+.core__principles__container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.core__principles__title {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.core__principles__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.core__principles__grid__item {
+  background-color: var(--ghost-white);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.core__principles__grid__item__title {
+  font-weight: 600;
+}
+
+.core__principles__grid__item__content {
+  color: #555;
+}

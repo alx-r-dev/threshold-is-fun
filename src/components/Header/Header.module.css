@@ -40,6 +40,7 @@
   border-radius: var(--global-border-radius);
   color: white;
   background-color: var(--tiger-orange);
+  font-weight: 500;
 }
 
 .header__button__how__it__works {

@@ -1,11 +1,11 @@
 import MainLayout from "../layout/MainLayout";
-import Header from "../components/Header/Header";
+import CalculatorHeader from "../components/Header/CalculatorHeader";
 import NorwegianMainContainer from "../components/Vdot/NorweiganMainContainer";
 
 const HomePage = () => {
   return (
     <MainLayout>
-      <Header />
+      <CalculatorHeader />
       <NorwegianMainContainer />
     </MainLayout>
   );
