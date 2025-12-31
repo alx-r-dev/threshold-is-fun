@@ -13,6 +13,8 @@ type CalculateVdotProps = {
     value: VdotFormData | ((val: VdotFormData) => VdotFormData)
   ) => void;
   isDataAvailable: boolean;
+  handleClearAllData: () => void;
+  setIsDataAvailable: Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CalculateVdot = ({
@@ -20,16 +22,22 @@ const CalculateVdot = ({
   setVdotFormData,
   setRaceTimeFormatCheckSucceeded,
   raceTimeFormatCheckSucceeded,
-  isDataAvailable
+  isDataAvailable,
+  handleClearAllData,
+  setIsDataAvailable
 }: CalculateVdotProps) => {
   return (
     <RoundedCard>
-      <VdotHeader />
+      <VdotHeader
+        isDataAvailable={isDataAvailable}
+        handleClearAllData={handleClearAllData}
+      />
       <VdotForm
         vdotFormData={vdotFormData}
         setVdotFormData={setVdotFormData}
         setRaceTimeFormatCheckSucceeded={setRaceTimeFormatCheckSucceeded}
         raceTimeFormatCheckSucceeded={raceTimeFormatCheckSucceeded}
+        setIsDataAvailable={setIsDataAvailable}
       />
       <VdotPaces
         vdotFormData={vdotFormData}

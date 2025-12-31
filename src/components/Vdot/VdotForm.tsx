@@ -17,24 +17,27 @@ type VdotFormProps = {
   setVdotFormData: (
     value: VdotFormData | ((val: VdotFormData) => VdotFormData)
   ) => void;
+  setIsDataAvailable: Dispatch<React.SetStateAction<boolean>>;
 };
 
 const VdotForm = ({
   vdotFormData,
   setRaceTimeFormatCheckSucceeded,
   raceTimeFormatCheckSucceeded,
-  setVdotFormData
+  setVdotFormData,
+  setIsDataAvailable
 }: VdotFormProps) => {
   const raceTimeRef = useRef<HTMLInputElement>(null);
   const raceDistanceRef = useRef<HTMLSelectElement>(null);
 
   const handleVdotFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (raceTimeRef.current && raceDistanceRef.current && raceTimeRef.current) {
+    if (raceTimeRef.current && raceDistanceRef.current) {
       const raceTime = raceTimeRef.current.value;
       const raceDistance = Number(raceDistanceRef.current.value);
       if (checkRaceTimeFormat(raceTime)) {
         setRaceTimeFormatCheckSucceeded(true);
+        setIsDataAvailable(true);
         const vdotPaces = formattedVdotPaces(raceDistance, raceTime);
         setVdotFormData((prevFormData) => {
           return {

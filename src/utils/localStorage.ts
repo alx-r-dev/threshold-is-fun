@@ -3,7 +3,7 @@ class LocalStorage {
   static getLocalStorage(key: string) {
     const item = localStorage.getItem(key);
     if (item === "undefined" || item === null) {
-      return false;
+      return null;
     }
     return JSON.parse(item);
   }
