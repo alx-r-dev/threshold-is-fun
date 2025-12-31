@@ -5,8 +5,9 @@ import App from "./App.tsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import HowItWorks from "./pages/HowItWorks.tsx";
 
-//TODO: : make clear data work and weird calculations now
-//add github actions for tests
+//TODO: : 1. githun actions for vitest
+//2. look for spelling errors
+//3. update read me
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
