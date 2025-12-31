@@ -1,5 +1,7 @@
 # The Norwegian Singles Method
 
+https://threshold-is-fun.vercel.app/
+
 The goal of this project is to provide an easy to use UI to calculate your
 specific training running paces based on the Norwegian Singles Method. This
 project also aims to provide the user with insight and the history of this method.
