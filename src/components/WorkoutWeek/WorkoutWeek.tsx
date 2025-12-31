@@ -76,7 +76,7 @@ const workoutWeekRows = [
       />
     )
   },
-  { Day: "Sunday", Run: "Long run" }
+  { Day: "Sunday", Run: "Easy Long run" }
 ];
 
 const WorkoutWeek = ({ isDataAvailable }: { isDataAvailable: boolean }) => {

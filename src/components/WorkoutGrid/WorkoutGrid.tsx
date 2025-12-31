@@ -5,6 +5,7 @@ import styles from "./WorkoutGrid.module.css";
 import type { VdotFormData, NorwegianGridData } from "../../types/vdot";
 import RoundedCard from "../ui/Card/RoundedCard";
 import Vdot from "../../utils/vdot";
+import Disclaimer from "../Disclaimer/Disclaimer";
 
 type WorkoutGridProps = {
   vdotFormData: VdotFormData;
@@ -110,6 +111,7 @@ const WorkoutGrid = ({
       <WorkoutGridNotes>
         <Notes />
       </WorkoutGridNotes>
+      <Disclaimer />
     </RoundedCard>
   );
 };

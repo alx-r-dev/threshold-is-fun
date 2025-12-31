@@ -1,0 +1,8 @@
+.clear__data__button {
+  font-weight: normal;
+  font-size: medium;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 0px 15px 0px 15px;
+  color: #ff4b4b;
+}

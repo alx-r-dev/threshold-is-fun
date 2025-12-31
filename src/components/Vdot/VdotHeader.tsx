@@ -3,8 +3,17 @@ import { HiQuestionMarkCircle } from "react-icons/hi";
 import VdotPopup from "./VdotPopup";
 import { useState } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import ClearData from "../ClearData/ClearData";
 
-const VdotHeader = () => {
+type VdotHeaderProps = {
+  isDataAvailable: boolean;
+  handleClearAllData: () => void;
+};
+
+const VdotHeader = ({
+  isDataAvailable,
+  handleClearAllData
+}: VdotHeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleQuestionMarkClick = () => {
@@ -16,16 +25,22 @@ const VdotHeader = () => {
   return (
     <div>
       <div className={styles.vdot__title}>
-        Calculate VDOT
-        <div style={{ position: "relative" }}>
-          <div ref={isOutsideClickRef}>
-            <HiQuestionMarkCircle
-              style={{ cursor: "pointer" }}
-              onClick={handleQuestionMarkClick}
-            />
+        <div className={styles.vdot__title__and__icon}>
+          Calculate VDOT
+          <div style={{ position: "relative" }}>
+            <div ref={isOutsideClickRef}>
+              <HiQuestionMarkCircle
+                style={{ cursor: "pointer" }}
+                onClick={handleQuestionMarkClick}
+              />
+            </div>
+            <VdotPopup isOpen={isOpen} />
           </div>
-          <VdotPopup isOpen={isOpen} />
         </div>
+        <ClearData
+          isDataAvailable={isDataAvailable}
+          handleClearAllData={handleClearAllData}
+        />
       </div>
       <div className={styles.vdot__subtext}>
         A running performance score to gauge current fitness level

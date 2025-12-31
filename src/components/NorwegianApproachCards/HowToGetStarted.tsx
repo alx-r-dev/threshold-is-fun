@@ -35,7 +35,7 @@ const HowToGetStarted = () => {
           <CheckMarkList
             list={establishBaselineCheckMarkList}
             component={
-              <ButtonRedirect text="Go To Calculator" redirectPath="about" />
+              <ButtonRedirect text="Go To Calculator" redirectPath="/" />
             }
           />
         </div>
