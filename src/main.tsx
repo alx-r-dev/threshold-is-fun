@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import HowItWorks from "./pages/HowItWorks.tsx";
 
-//TODO: : 1. githun actions for vitest
+//TODO:
 //2. look for spelling errors
 //3. update read me
 
